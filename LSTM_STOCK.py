@@ -40,7 +40,7 @@ def get_data(code,end='2017-01-01', duration=365):
     start = d2.strftime('%Y-%m-%d')
     return ts.get_h_data(code, start=start, end=end)
 
-def train_test_split(data,test_prop=0.3):
+def train_test_split(data,SEQ_LENGTH = 25,test_prop=0.3):
     data = data.sort_index()
     ntrain = int(len(data) *(1-test_prop))
     predictors = data.columns[:4]
@@ -114,6 +114,7 @@ def policy(code,xtest,ytest,ytest_open,model):
         totals.append(stock.total)
 
     plt.plot(totals)
+    plt.title('Wealth curve')
     plt.show()
     return totals
 
@@ -153,7 +154,7 @@ if __name__ == '__main__':
     plt.legend()
     #plt.show()
 
-    policy(code, xtest, ytest, ytest_open, model)
+    totals = policy(code, xtest, ytest, ytest_open, model)
 
 
 
